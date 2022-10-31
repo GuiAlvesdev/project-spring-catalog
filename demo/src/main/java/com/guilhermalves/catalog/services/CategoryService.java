@@ -4,11 +4,17 @@ package com.guilhermalves.catalog.services;
 import com.guilhermalves.catalog.dto.CategoryDTO;
 import com.guilhermalves.catalog.entities.Category;
 import com.guilhermalves.catalog.repositories.CategoryRepository;
-import com.guilhermalves.catalog.services.exceptions.EntityNotFoundException;
+import com.guilhermalves.catalog.services.exceptions.DatabaseException;
+import com.guilhermalves.catalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,9 +27,9 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll(){
-        List<Category> list = repository.findAll();
-        return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+    public Page<CategoryDTO> findAllPaged(PageRequest pageRequest){
+        Page<Category> list = repository.findAll(pageRequest);
+        return list.map(x -> new CategoryDTO(x));
 
 
     }
@@ -32,7 +38,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id);
-        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade nao Localizada"));
+        Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade nao Localizada"));
         return new CategoryDTO(entity);
 
 
@@ -45,6 +51,34 @@ public class CategoryService {
         entity = repository.save(entity);
         return new CategoryDTO(entity);
 
+
+    }
+
+    @Transactional
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try {
+            Category entity = repository.getReferenceById(id);
+            entity.setName(dto.getName());
+            entity = repository.save(entity);
+            return new CategoryDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(" Id nao encontrado" +id);
+
+        }
+    }
+
+
+    public void delete(Long id) {
+        try{
+            repository.deleteById(id);
+
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("id not found" +id);
+
+        }catch (DataIntegrityViolationException e ){
+            throw new DatabaseException("Violacao de Integridade");
+
+        }
 
     }
 }
