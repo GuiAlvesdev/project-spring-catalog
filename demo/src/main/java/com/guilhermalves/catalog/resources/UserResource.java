@@ -3,6 +3,7 @@ package com.guilhermalves.catalog.resources;
 
 import com.guilhermalves.catalog.dto.UserDTO;
 import com.guilhermalves.catalog.dto.UserInsertDTO;
+import com.guilhermalves.catalog.dto.UserUpdateDTO;
 import com.guilhermalves.catalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,10 +56,10 @@ public class UserResource {
 
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, @RequestBody UserDTO dto)
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, @RequestBody UserUpdateDTO dto)
     {
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+        UserDTO newDTO = service.update(id, dto);
+        return ResponseEntity.ok().body(newDTO);
 
 
 
