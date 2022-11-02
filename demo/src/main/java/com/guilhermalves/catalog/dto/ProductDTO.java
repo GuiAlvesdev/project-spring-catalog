@@ -3,6 +3,10 @@ package com.guilhermalves.catalog.dto;
 import com.guilhermalves.catalog.entities.Category;
 import com.guilhermalves.catalog.entities.Product;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,10 +19,19 @@ public class ProductDTO implements Serializable {
 
 
     private Long id;
+
+    @Size(min = 5, max = 70, message = "nome deve conter entre 5 a 70 caracteres")
+    @NotBlank(message = "campo obrigatorio")
     private String name;
+
+    @NotBlank(message = "Campo obrigatorio!")
     private String description;
+
+    @Positive(message = "o valor deve ser positivo")
     private Double price;
     private String imgUrl;
+
+    @PastOrPresent(message = "a data nao  pode ser acima de hoje")
     private Instant date;
 
     private List<CategoryDTO> categories = new ArrayList<>();
