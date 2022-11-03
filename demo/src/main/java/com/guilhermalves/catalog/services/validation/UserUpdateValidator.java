@@ -52,7 +52,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
 
 
 
-        // Coloque aqui seus testes de validação, acrescentando objetos FieldMessage à lista
+
 
         for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();
