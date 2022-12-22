@@ -4,6 +4,7 @@ package com.guialvesdev.catalog.services;
 import com.guialvesdev.catalog.dto.CategoryDTO;
 import com.guialvesdev.catalog.entities.Category;
 import com.guialvesdev.catalog.repository.CategoryRepository;
+import com.guialvesdev.catalog.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO FindById(Long id) {
         Optional<Category> obj = repository.findById(id);
-        Category entity = obj.get();
+        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade nao encontrada"));
         return new CategoryDTO(entity);
 
 
