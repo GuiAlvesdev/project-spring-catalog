@@ -2,9 +2,12 @@ package com.guialvesdev.catalog.services;
 
 
 
+import com.guialvesdev.catalog.dto.CategoryDTO;
 import com.guialvesdev.catalog.dto.ProductDTO;
 
+import com.guialvesdev.catalog.entities.Category;
 import com.guialvesdev.catalog.entities.Product;
+import com.guialvesdev.catalog.repository.CategoryRepository;
 import com.guialvesdev.catalog.repository.ProductRepository;
 import com.guialvesdev.catalog.services.exceptions.DatabaseException;
 import com.guialvesdev.catalog.services.exceptions.ResourceNotFoundException;
@@ -24,6 +27,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
 
@@ -51,18 +57,37 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
-        entity.setName(dto.getName());
+        copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new ProductDTO(entity);
 
     }
+
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
+        entity.setName(dto.getName());
+        entity.setDate(dto.getDate());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+
+        entity.getCategories().clear();
+        for (CategoryDTO catDto : dto.getCategories()){
+            Category category = categoryRepository.getReferenceById(catDto.getId());
+            entity.getCategories().add(category);
+        }
+
+    }
+
+
+
+
 
 
     @Transactional(readOnly = true)
     public ProductDTO update(Long id , ProductDTO dto) {
         try {
             Product entity = repository.getReferenceById(id);
-            entity.setName(dto.getName());
+            copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ProductDTO(entity);
         }catch (EntityNotFoundException e){
