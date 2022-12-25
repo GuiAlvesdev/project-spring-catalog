@@ -8,6 +8,8 @@
 <h3 align="center">projeto em desenvolvimento de uma api de catalogo de produtos em java spring 2.7.6</h3>
 <h3 align="center">em progresso</h3>
 
+<h3 align="center">Etapa Atual: TESTES UTILIZANDO JUNIT E MOCKITO</h3>
+
 
 <div align="center">
 
