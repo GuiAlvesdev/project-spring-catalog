@@ -42,7 +42,7 @@ public class ProductRepositoryTests {
         product = repository.save(product);
         Assertions.assertNotNull(product.getId());
         Assertions.assertEquals(countTotalProducts + 1, product.getId());
-        
+
     }
 
 
