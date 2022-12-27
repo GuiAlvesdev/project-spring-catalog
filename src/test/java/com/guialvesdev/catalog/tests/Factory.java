@@ -9,8 +9,8 @@ import java.time.Instant;
 public class Factory {
 
     public static Product createProduct(){
-        Product product = Product(1L, "Phone", "Goood Phone", 800.0, "Https://IMG", Instant.parse("2020-07-14T10:00:00Z"));
-        product.getCategories().add(new Category(2L, "Eletronics"));
+        Product product = new Product(1L, "Phone", "Goood Phone", 800.0, "Https://IMG", Instant.parse("2020-07-14T10:00:00Z"));
+        product.getCategories().add(new Category(2L, "Electronics"));
         return product;
     }
 

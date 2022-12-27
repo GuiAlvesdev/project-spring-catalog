@@ -20,7 +20,7 @@ public class ProductRepositoryTests {
     private long nonExistingId = 1000L;
 
     private long countTotalProducts = 25L;
-    
+
 
 
     @BeforeEach
@@ -42,6 +42,7 @@ public class ProductRepositoryTests {
         product = repository.save(product);
         Assertions.assertNotNull(product.getId());
         Assertions.assertEquals(countTotalProducts + 1, product.getId());
+        
     }
 
 
