@@ -5,6 +5,8 @@ import com.guialvesdev.catalog.entities.Category;
 import com.guialvesdev.catalog.entities.Product;
 
 import javax.persistence.SecondaryTable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -16,7 +18,11 @@ public class ProductDTO implements Serializable {
 
 
     private Long id;
+
+    @Size(min = 5, max = 60, message = "Nome deve ter entre 5 a 60 caracteres")
     private String name;
+
+    @NotBlank(message = "Campo Requerido")
     private String description;
     private Double price;
     private String imgUrl;
