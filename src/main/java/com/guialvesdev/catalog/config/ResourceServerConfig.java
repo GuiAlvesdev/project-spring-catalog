@@ -60,7 +60,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.cors().configurationSource(corsConfigurationSource());
     }
 
-    
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
