@@ -1,7 +1,11 @@
 package com.guialvesdev.catalog.dto;
 
+import com.guialvesdev.catalog.services.validation.UserInsertValid;
+
 import java.io.Serializable;
 
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO  {
     private static final long serialVersionUID = 1L;
 
