@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -28,7 +26,7 @@ public class CategoryService {
 
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Page<CategoryDTO> findAllPaged(Pageable pageable){
         Page<Category> list = repository.findAll(pageable);
         return list.map(x -> new CategoryDTO(x));
@@ -38,7 +36,7 @@ public class CategoryService {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CategoryDTO FindById(Long id) {
         Optional<Category> obj = repository.findById(id);
         Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade nao encontrada"));
@@ -49,7 +47,7 @@ public class CategoryService {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CategoryDTO insert(CategoryDTO dto) {
         Category entity = new Category();
         entity.setName(dto.getName());
@@ -59,7 +57,7 @@ public class CategoryService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CategoryDTO update(Long id , CategoryDTO dto) {
         try {
             Category entity = repository.getReferenceById(id);

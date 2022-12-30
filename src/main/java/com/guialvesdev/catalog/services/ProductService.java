@@ -59,7 +59,7 @@ public class ProductService {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
