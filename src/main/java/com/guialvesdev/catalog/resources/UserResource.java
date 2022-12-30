@@ -1,12 +1,10 @@
 package com.guialvesdev.catalog.resources;
 
 
-import com.guialvesdev.catalog.dto.ProductDTO;
+
 import com.guialvesdev.catalog.dto.UserDTO;
 import com.guialvesdev.catalog.dto.UserInsertDTO;
 import com.guialvesdev.catalog.dto.UserUpdateDTO;
-import com.guialvesdev.catalog.entities.User;
-import com.guialvesdev.catalog.services.ProductService;
 import com.guialvesdev.catalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +42,7 @@ public class UserResource {
     public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto){
         UserDTO newDto = userService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("{id}").buildAndExpand(newDto.getId()).toUri();
+                .path("/{id}").buildAndExpand(newDto.getId()).toUri();
 
 
         return ResponseEntity.created(uri).body(newDto);
