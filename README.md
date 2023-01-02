@@ -24,8 +24,3 @@
 <p align="center"> em progresso </p>
 
 
-<div align="center">
-
-![gifs-de-homens-](https://user-images.githubusercontent.com/72584502/209208107-a7bc24b6-cd99-45a2-b9d7-064f054f7f67.gif)
-
-</div>
