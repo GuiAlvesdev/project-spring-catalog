@@ -22,7 +22,11 @@ public class WebSecurityConfig  {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
-        return (web) -> web.ignoring().antMatchers("/actuator/**");
+        return (web) -> web.ignoring().antMatchers("/actuator/** ","/swagger-ui/**", "/v3/api-docs/**" );
+
+
+
+
     }
 
 
